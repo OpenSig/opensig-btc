@@ -1,0 +1,4 @@
+{ "name": "StatusCodeError",
+  "statusCode": 500,
+  "message": "500 - No free outputs to spend",
+  "error": "No free outputs to spend" }

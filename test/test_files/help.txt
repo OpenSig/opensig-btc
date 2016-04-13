@@ -1,0 +1,23 @@
+
+  Usage: opensig <command> [options] [args]   # Try opensig <command> --help
+
+
+  Commands:
+
+    info [options] [item]        outputs information about the given WIF, private key or wallet.
+    create [options] [wallet]    creates a new private key and outputs its details or creates a new wallet
+    verify <file>                queries the blockchain and outputs the list of signees for the given file
+    sign [options] <file> [key]  signs the given file using the given key and outputs the transaction
+    send [options] <amount>      creates a transaction
+    balance [item]               displays the balance for the given public key, WIF, label or private key
+
+  Options:
+
+    -h, --help             output usage information
+    -V, --version          output the version number
+    -a --address           limit output to compressed public blockchain address(es) only.  Overrides -f
+    -f --format <format>   specify the output format (see documentation)
+    -w --wallet <file>     use the specified wallet file instead of the default wallet
+    -v --verbose           display verbose error information
+    --test-blockchain-api  places the blockchain api interface into test mode
+

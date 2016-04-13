@@ -1,0 +1,35 @@
+{
+  "name": "opensig",
+  "version": "1.0.0-alpha",
+  "description": "OpenSig command line client",
+  "main": "index.js",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "src/"
+  ],
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "commander": "^2.9.0",
+    "opensig-lib": "^1.0.0-alpha.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "cd test; . test_all.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/opensig/opensig.git"
+  },
+  "keywords": [
+    "opensig",
+    "digital signature",
+    "e-sign",
+    "electronic signature",
+    "esign"
+  ],
+  "author": "D N Potter",
+  "license": "MIT"
+}
