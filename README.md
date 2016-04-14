@@ -1,9 +1,9 @@
-# OpenSig Library (opensig-lib)
+# OpenSig CLI (opensig)
 
 [![NPM](https://img.shields.io/npm/v/bitcoinjs-lib.svg)](https://www.npmjs.org/package/bitcoinjs-lib)
 
 
-Blockchain e-sign library.  A javascript library that implements the opensig e-sign protocol providing functions to sign and verify files, recording signatures on the bitcoin blockchain. 
+OpenSig Command Line Interface.  A javascript implementation of the OpenSig standard providing command line functions to sign and verify files, recording signatures on the bitcoin blockchain. 
 
 ## Primary Features
 - **Create**: generate a new private key and optionally add it to your wallet.
@@ -29,7 +29,7 @@ Blockchain e-sign library.  A javascript library that implements the opensig e-s
   Commands:
 
     info [options] [item]        outputs information about the given WIF, private key or wallet.
-    create [options]             creates a new private key and outputs its details
+    create [options] [wallet]    creates a new private key and outputs its details or creates a new wallet
     verify <file>                queries the blockchain and outputs the list of signees for the given file
     sign [options] <file> [key]  signs the given file using the given key and outputs the transaction
     send [options] <amount>      creates a transaction
@@ -47,10 +47,15 @@ Blockchain e-sign library.  A javascript library that implements the opensig e-s
 ```
 
 ### Create
+Creates a new private key and outputs its details, or creates a new wallet.
 ```
-  Usage: opensig create [options]
+  Usage: 1. create [-s <label>] [-w path/to/wallet]
+         2. create -k <key> -s <label> [-w path/to/wallet]
+         3. create wallet [-w path/to/wallet]
 
-  creates a new private key and outputs its details
+  1. creates a new private key and outputs its details, optionally saving it to the wallet with the given label
+  2. imports the given private key or WIF into the wallet with the given label.
+  3. creates a new wallet.  If -w is not given then the default wallet is created (~/.opensig/wallet)
 
   Options:
 
@@ -60,10 +65,11 @@ Blockchain e-sign library.  A javascript library that implements the opensig e-s
 ```
 
 ### Sign
+Creates a signature transaction and optionally publishes it on the blockchain.
 ```
   Usage: opensig sign [options] <file> [key]
 
-  signs the given file using the given key and outputs the transaction
+  Signs the given file using the given key and outputs the transaction
 
   Options:
 
@@ -74,40 +80,43 @@ Blockchain e-sign library.  A javascript library that implements the opensig e-s
 ```
 `file`  File to sign.  _(string containing a file path or a file's hex64 private key or WIF._.
 
-`key`   Key to sign with.  _(string containing a wallet key label, hex64 private key, a WIF or a file.  If not present the first key in the wallet is used.)_ 
+`key`   Key to sign with.  _(string containing a wallet key label, hex64 private key, a WIF or a file.  If not present the default (first) key in the wallet is used.)_ 
 
-`publish`   If present the transaction will be published on the blockchain.  Defaults to outputting the transaction locally.  _(boolean)_
+`publish`   If present the transaction will be published on the blockchain.  Defaults to false - output the transaction to the command line only.  _(boolean)_
 
-`amount`   Optional amount to send in the transaction.  Defaults to 5430 satoshis. _(positive integer)_
+`amount`   Optional amount to send in the transaction.  Defaults to the minimum 5430 satoshis. _(positive integer)_
 
 `fee`   Optional amount to include as the miner's fee.  Defaults to 10000 satoshis. _(positive integer)_
 
 ### Verify
-Returns a promise to resolve an array of Signature objects containing the list of signatures for the given file.
+Returns a list of signatures for the given file.
 
 ```
   Usage: opensig verify [options] <file>
 
-  queries the blockchain and outputs the list of signees for the given file
+  queries the blockchain and outputs the list of signatures for the given file
 
   Options:
 
     -h, --help  output usage information
 ```
-`file`  File to verify.  _(string containing a file path or a file's hex64 private key or WIF)_.
+`file`  File to verify.  _(string containing a file path or a file's public key, hex64 private key or WIF)_.
 
 ### Info
+Outputs information about the given WIF, private key, wallet label or wallet.
 ```
-  Usage: opensig info [options] [item]
+  Usage: 1. opensig info [options]
+         2. opensig info [options] <item>
 
-  outputs information about the given WIF, private key or wallet.
+  1. outputs information for all keys in the wallet.
+  2. outputs information about the given label, WIF, private key or file.
 
   Options:
 
     -h, --help  output usage information
     --full  outputs full information.  Equivalent to --format "<full>"
 ```
-`item`  The item to display information about.  With no arguments info outputs the wallet.
+`item`  The item to display information about.  With no arguments info outputs all keys in the wallet.
 
 By default info outputs the public key, private WIF and label of the item requested.  Use the -f <format> option to control the output format, where <format> is a string containing free text and any of the following fields:
 `label`  the key's label
@@ -121,7 +130,7 @@ By default info outputs the public key, private WIF and label of the item reques
 
 
 ### Send
-Returns a promise to resolve a Receipt object containing a transaction to send the given amount from the `from` key to the `to` address, and, optionally, to publish the transaction on the blockchain.
+Returns a receipt containing a transaction to send the given amount from the `from` key to the `to` address, and, optionally, to publish the transaction on the blockchain.
 ```
   Usage: opensig send [options] <amount>
 
@@ -146,11 +155,11 @@ Returns a promise to resolve a Receipt object containing a transaction to send t
 `publish`   If present the transaction will be published on the blockchain _(boolean)_
 
 ### Balance
-Returns a promise to resolve the sum of unspent transaction outputs retrieved from the blockchain for the given public key.
+Returns the blockchain balance for the given public address (the sum of unspent transaction outputs)
 ```
   Usage: opensig balance [options] [item]
 
-  displays the balance for the given public key, WIF, label or private key
+  displays the balance for the given label, public key, WIF, private key or file
 
   Options:
 
@@ -163,54 +172,129 @@ Returns a promise to resolve the sum of unspent transaction outputs retrieved fr
 
 Create a new wallet in the default location (~/.opensig/wallet)...
 ```
-opensig create wallet
+> opensig create wallet
 ```
 
 Create a new key and save it to the wallet...
 ```
-opensig create -s Me
+> opensig create -s Me
+```
+
+Get your public OpenSig address for sharing with others...
+```
+> opensig info --opensig
+OPENSIG-1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R-btc
 ```
 
 Top up your new key from another account...
 ```
-opensig send 100000  --to Me  --from "MyWellFundedWIF00FpYdbmJ4dbgJmr5Y1h5eX9LmsPWKBZBqkUg"  --publish
+> opensig send 100000  --to Me  --from "MyWellFundedWIF00FpYdbmJ4dbgJmr5Y1h5eX9LmsPWKBZBqkUg"  --publish
+Receipt {
+  from: 
+   { address: '1M9jofAErijG4eiPUy19Qxot1KkPRRzyet',
+     label: undefined },
+  to: 
+   { address: '1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R',
+     label: 'Me' },
+  input: 2100000000000000,
+  payment: 100000,
+  fee: 10000,
+  change: 209999999890000,
+  response: 'Transaction Submitted',
+  txnID: '4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b',
+  txnHex: '04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73' }
 ```
 
 Check the blockchain balance of your new key...
 ```
-opensig balance
+> opensig balance
+100000
 ```
 
 Get information about your new key in various formats...
 ```
-opensig info
-opensig info Me
-opensig info --format "<full>"
-opensig info --format "<pub>"
-opensig info -a
-opensig info --full
-opensig info --format "public key: <pub>, wif: <wif>, private key: <priv>"
-opensig info --format "compressed keys: <pubc> <wifc>"
-opensig info --format "uncompressed keys: <pubu> <wifu>"
+> opensig info
+1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R	L2rvsCCDXhMkqQhZ2TRuyzjFw5FpkTM5hfczqEuYayidK2uKUnXL	Me
+
+> opensig info Me
+1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R	L2rvsCCDXhMkqQhZ2TRuyzjFw5FpkTM5hfczqEuYayidK2uKUnXL	Me
+
+> opensig info --format "<full>"
+
+label                   : Me
+private key             : a8556b1ca569679a17274299e02b4558eca4ac4f9252e7fb9221d4b99244a2b4
+wif compressed          : L2rvsCCDXhMkqQhZ2TRuyzjFw5FpkTM5hfczqEuYayidK2uKUnXL
+wif uncompressed        : 5K6RSRHb73oPctb7MGWD1E5bCLzjY9EcW9kVxnkAskD9gXgzo8P
+public key compressed   : 1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R
+public key uncompressed : 1KxRFn875MpKYKEUEFDdZXTVxSpcjqhsNf
+
+> opensig info --format "<pub>"
+1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R
+
+> opensig info -a
+1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R
+
+> opensig info --full
+
+label                   : Me
+private key             : a8556b1ca569679a17274299e02b4558eca4ac4f9252e7fb9221d4b99244a2b4
+wif compressed          : L2rvsCCDXhMkqQhZ2TRuyzjFw5FpkTM5hfczqEuYayidK2uKUnXL
+wif uncompressed        : 5K6RSRHb73oPctb7MGWD1E5bCLzjY9EcW9kVxnkAskD9gXgzo8P
+public key compressed   : 1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R
+public key uncompressed : 1KxRFn875MpKYKEUEFDdZXTVxSpcjqhsNf
+
+> opensig info --format "public key: <pub>, wif: <wif>, private key: <priv>"
+public key: 1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R, wif: L2rvsCCDXhMkqQhZ2TRuyzjFw5FpkTM5hfczqEuYayidK2uKUnXL, private key: a8556b1ca569679a17274299e02b4558eca4ac4f9252e7fb9221d4b99244a2b4
+
+> opensig info --format "compressed keys: <pubc> <wifc>"
+compressed keys: 1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R L2rvsCCDXhMkqQhZ2TRuyzjFw5FpkTM5hfczqEuYayidK2uKUnXL
+
+> opensig info --format "uncompressed keys: <pubu> <wifu>"
+uncompressed keys: 1KxRFn875MpKYKEUEFDdZXTVxSpcjqhsNf 5K6RSRHb73oPctb7MGWD1E5bCLzjY9EcW9kVxnkAskD9gXgzo8P
 ```
 
 Sign a document...
 ```
-opensig sign my_file.doc
+> opensig sign my_file.doc --publish
+Receipt {
+  from: 
+   { address: '1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R',
+     label: Me },
+  to: 
+   { address: '16uozUn4X1yppn1nS1iQXT5u6BsqheGpUq',
+     label: 'my_file.doc' },
+  input: 100000,
+  payment: 5430,
+  fee: 10000,
+  change: 84570,
+  response: 'Transaction Submitted',
+  txnID: '0e3e2357e806b6cdb1f70b54c3a3a17b6714ee1f0e68bebb44a74b1efd512098',
+  txnHex: '010000000109882232243a0ff09bf0fe98f3be6130935642d11508c38d22724a81a24cd813010000006a47304402200c1a88c408a29c6a192bea5fa5881113d7736b373d211809b411856fecde5fb102204f86a8e5ef8864633410d19a1a76dab72bd105275a3d06bcb222236bd88a8d96012103ef12ef92ab520c62061e07186faac5ef43e835a3ef63ddd1437d15e9fcb0dab30000000002204e0000000000001976a9141d8abe268642dda7228be625e425749f0fc5467988acf1a40000000000001976a914dd09932106e2fd0f296b726da9cb5cf142648e9588ac00000000' }
 ```
 
 Verify the document...
 ```
-opensig verify my_file.doc
+> opensig verify my_file.doc
+Thu, 14 Apr 2016 00:43:39 GMT	1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R	Me
 ```
 
 Get information about a file's blockchain key, check its balance and send all its funds to your address...
 ```
-opensig info my\_file.doc --full
-opensig balance my\_file.doc
-opensig send all --from my\_file.doc --to me --publish
-```
+> opensig info my\_file.doc --full
 
+label                   : my_file.doc
+private key             : 773a388fbbecea7f05053b0c55dd6b5cb76e7a330e75abda01fdcf6227b6060b
+wif compressed          : L1DUQpv8LHWsNiDaDzvMVugqd73Kgit3YNPVw5dEvNpXUcnAmRTT
+wif uncompressed        : 5Jio5wovmhSoJcAeS9bHsxSLdGsNTDfJLo5eNKGTiYgKEbMP4f3
+public key compressed   : 16uozUn4X1yppn1nS1iQXT5u6BsqheGpUq
+public key uncompressed : 15DVgHc5YXLsxQMU1qrcFbhoyKdqymUvgx
+
+> opensig balance my\_file.doc
+5430
+
+> opensig send all --from my\_file.doc --to me --publish
+insufficient funds
+```
 
 ### Run the tests
 
