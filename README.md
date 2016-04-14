@@ -281,7 +281,7 @@ Thu, 14 Apr 2016 00:43:39 GMT	1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R	Me
 
 Get information about a file's blockchain key, check its balance and send all its funds to your address...
 ```
-> opensig info my\_file.doc --full
+> opensig info my_file.doc --full
 
 label                   : my_file.doc
 private key             : 773a388fbbecea7f05053b0c55dd6b5cb76e7a330e75abda01fdcf6227b6060b
@@ -290,10 +290,10 @@ wif uncompressed        : 5Jio5wovmhSoJcAeS9bHsxSLdGsNTDfJLo5eNKGTiYgKEbMP4f3
 public key compressed   : 16uozUn4X1yppn1nS1iQXT5u6BsqheGpUq
 public key uncompressed : 15DVgHc5YXLsxQMU1qrcFbhoyKdqymUvgx
 
-> opensig balance my\_file.doc
+> opensig balance my_file.doc
 5430
 
-> opensig send all --from my\_file.doc --to me --publish
+> opensig send all --from my_file.doc --to me --publish
 insufficient funds
 ```
 
