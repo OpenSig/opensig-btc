@@ -32,18 +32,21 @@ program
 	.command('info [item]')
 	.description('outputs information about the given WIF, private key or wallet.')
 	.option('--full', 'outputs full information.  Equivalent to --format "<full>"')
+	.option('-o --opensig', 'outputs in OpenSig text format.')
 	.action(function(item, options){
 		try{
 			// args and options
 			item = item || "default-key";
 			var publicAddressOnly = program.address || false;
 			var fullOutput   = options.full || false;
+			var opensigOutput   = options.opensig || false;
 			var format = program.format || "";
 			var walletFile = program.wallet || defaultWalletFile;
 
 			// determine output format
 			format = fullOutput ? "<full>" : format;
 			format = publicAddressOnly ? "<pub>" : format;
+			format = opensigOutput ? "OPENSIG-<pub>-btc" : format;
 
 			// command
 			var wallet = new Wallet( walletFile );
