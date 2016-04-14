@@ -3,7 +3,7 @@
 [![NPM](https://img.shields.io/npm/v/bitcoinjs-lib.svg)](https://www.npmjs.org/package/bitcoinjs-lib)
 
 
-OpenSig Command Line Interface.  A javascript implementation of the OpenSig standard providing command line functions to sign and verify files, recording signatures on the bitcoin blockchain. 
+OpenSig Command Line Interface.  A javascript implementation of the OpenSig standard providing command line functions to digitally sign and verify files, recording signatures on the bitcoin blockchain. 
 
 ## Primary Features
 - **Create**: generate a new private key and optionally add it to your wallet.
@@ -53,7 +53,8 @@ Creates a new private key and outputs its details, or creates a new wallet.
          2. create -k <key> -s <label> [-w path/to/wallet]
          3. create wallet [-w path/to/wallet]
 
-  1. creates a new private key and outputs its details, optionally saving it to the wallet with the given label
+  1. creates a new private key and outputs its details, optionally saving it to the wallet with the 
+     given label.
   2. imports the given private key or WIF into the wallet with the given label.
   3. creates a new wallet.  If -w is not given then the default wallet is created (~/.opensig/wallet)
 
@@ -148,7 +149,7 @@ Returns a receipt containing a transaction to send the given amount from the `fr
 
 `to`   Wallet key label, public key, private key or wif of the address to send to.  _(string containing a label, public key, hex64 private key or WIF.  Also accepts a file)_ 
 
-`amount`   Amount to spend in the transaction.  Defaults to 5430 satoshis. _(positive integer)_
+`amount`   Amount to spend in the transaction or "all" to empty the address.  Defaults to 5430 satoshis. _(positive integer)_
 
 `fee`   Amount to include as the miner's fee in addition to the amount.  Defaults to 10000 satoshis. _(positive integer)_
 
