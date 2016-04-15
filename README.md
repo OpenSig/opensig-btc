@@ -106,18 +106,18 @@ Returns a list of signatures for the given file.
 ### Info
 Outputs information about the given WIF, private key, wallet label or wallet.
 ```
-  Usage: 1. opensig info [options]
-         2. opensig info [options] <item>
+  Usage: 1. opensig info [options] [item]
+         2. opensig info [options] wallet
 
-  1. outputs information for all keys in the wallet.
-  2. outputs information about the given label, WIF, private key or file.
+  1. outputs information about the given label, WIF, private key or file.
+  2. outputs information for all keys in the wallet.
 
   Options:
 
     -h, --help  output usage information
     --full  outputs full information.  Equivalent to --format "<full>"
 ```
-`item`  The item to display information about.  With no arguments info outputs all keys in the wallet.
+`item`  The item to display information about.  With no arguments info outputs the default key (first key in the wallet).
 
 By default info outputs the public key, private WIF and label of the item requested.  Use the -f <format> option to control the output format, where <format> is a string containing free text and any of the following fields:
 `label`  the key's label
@@ -176,7 +176,7 @@ Create a new wallet in the default location (~/.opensig/wallet)...
 > opensig create wallet
 ```
 
-Create a new key and save it to the wallet...
+Create a new key and save it to the wallet with the label "Me"...
 ```
 > opensig create -s Me
 ```
@@ -218,6 +218,9 @@ Get information about your new key in various formats...
 1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R	L2rvsCCDXhMkqQhZ2TRuyzjFw5FpkTM5hfczqEuYayidK2uKUnXL	Me
 
 > opensig info Me
+1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R	L2rvsCCDXhMkqQhZ2TRuyzjFw5FpkTM5hfczqEuYayidK2uKUnXL	Me
+
+> opensig info wallet
 1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R	L2rvsCCDXhMkqQhZ2TRuyzjFw5FpkTM5hfczqEuYayidK2uKUnXL	Me
 
 > opensig info --format "<full>"
