@@ -303,6 +303,7 @@ insufficient funds
 ### Run the tests
 
     $ npm test
+    $ npm run test-cov
 
 
 ## Copyright
