@@ -3,7 +3,9 @@
 [![NPM](https://img.shields.io/npm/v/bitcoinjs-lib.svg)](https://www.npmjs.org/package/bitcoinjs-lib)
 
 
-OpenSig Command Line Interface.  A javascript implementation of the OpenSig standard providing command line functions to digitally sign and verify files, recording signatures on the bitcoin blockchain. 
+OpenSig Command Line Interface.  A javascript implementation of the [OpenSig](http://www.opensig.net) standard providing command line functions to digitally sign and verify files, recording signatures on the bitcoin blockchain. 
+
+OpenSig is built using [opensig-lib](https://github.com/opensig/opensig-lib).
 
 ## Primary Features
 - **Create**: generate a new private key and optionally add it to your wallet.
