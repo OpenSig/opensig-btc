@@ -20,7 +20,59 @@ OpenSig is built using [opensig-lib](https://github.com/opensig/opensig-lib).
 
 ## Installation
 
-`npm install opensig -g`
+The steps to install are:
+  - Install Node.js
+  - Use the Node.js Package Manager to install the opensig command line client and all its dependencies
+
+### Install Node.js
+Download the recommended version from [nodejs.org](https://nodejs.org/en/) and install it with the default installation options.
+
+### Install OpenSig
+Open a command prompt then type:
+```
+npm install opensig -g
+```
+This will install the OpenSig command line client and all its dependencies.
+
+## Using OpenSig for the First Time
+From the command prompt create a new wallet in the default location (~/.opensig/wallet)...
+```
+opensig create wallet
+```
+
+Create a new key and save it to the wallet with your name or whatever label you want (the -s option saves the new key to your wallet with the given label)...
+```
+opensig create -s "My Name"
+```
+
+List your new OpenSig address...
+```
+opensig info -o
+```
+To sign files you will need to transfer some bitcoin funds to your public key.
+
+However you don't need any funds to verify files so try...
+```
+opensig verify some_file
+```
+You should get no output meaning there are no signatures.
+
+Try downloading the [OpenSig white paper](http://www.opensig.net/opensig-whitepaper.pdf) and verifying that..
+```
+opensig verify opensig-whitepaper.pdf
+```
+You should see my public blockchain address (121GfwxgvdEUck7Xb4d5wbMnf7Xm2b4zw3) and the date I signed the file.
+ 
+When you have some funds you can try signing files...
+```
+opensig sign some_file
+```
+You should see a 'receipt' giving you detailed information about the blockchain transaction that OpenSig has generated.  Note, since you didn't specify the -p option the transaction hasn't been published on the blockchain and the response field in the receipt states 'Not Published'.  This means you haven't actually signed the file or spent any funds - it was just a dry run.  Run the same command with the -p option added and you should see 'Transaction Submitted' in the response field.
+ 
+You can get the balance of your OpenSig address by typing...
+```
+opensig balance
+```
 
 ## Usage
 
