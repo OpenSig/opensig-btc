@@ -11,7 +11,7 @@ OpenSig is built using [opensig-lib](https://github.com/opensig/opensig-lib).
 - **Create**: generate a new private key and optionally add it to your wallet.
 - **Sign**: sign any file with your private key and record your signature on the blockchain.
 - **Verify**: display a file's signatures from the blockchain.
-- **Info**: obtain private key, wif and public keys from any private key, WIF or file, or from a key in your wallet.
+- **Info**: obtain private key, WIF and public keys from any private key, WIF or file, or from a key in your wallet.
 
 ## Secondary Features
 - **Send**: create and publish a transaction to spend any amount from one address to another.
@@ -180,8 +180,8 @@ By default info outputs the public key, private WIF and label of the item reques
 `wif`    the Wallet Import Format version of the private key
 `pubc`   public key (compressed form)
 `pubu`   public key (uncompressed form)
-`wifc`   wif (compressed form)
-`wifu`   wif (uncompressed form)
+`wifc`   WIF (compressed form)
+`wifu`   WIF (uncompressed form)
 
 
 ### Send
@@ -195,13 +195,13 @@ Returns a receipt containing a transaction to send the given amount from the `fr
 
     -h, --help     output usage information
     -p --publish   publishes the signature on the blockchain
-    --to <to>      send to this label, public address, private key, wif or file
-    --from <from>  send from this label, private key, wif or file
+    --to <to>      send to this label, public address, private key, WIF or file
+    --from <from>  send from this label, private key, WIF or file
     --fee <fee>    use the given miner's fee
 ```
-`from`  Wallet key label, private key or wif of the address to spend from.  _(string containing a label, hex64 private key or WIF.  Also accepts a file)_.
+`from`  Wallet key label, private key or WIF of the address to spend from.  _(string containing a label, hex64 private key or WIF.  Also accepts a file)_.
 
-`to`   Wallet key label, public key, private key or wif of the address to send to.  _(string containing a label, public key, hex64 private key or WIF.  Also accepts a file)_ 
+`to`   Wallet key label, public key, private key or WIF of the address to send to.  _(string containing a label, public key, hex64 private key or WIF.  Also accepts a file)_ 
 
 `amount`   Amount to spend in the transaction or "all" to empty the address.  Defaults to 5430 satoshis. _(positive integer)_
 
