@@ -185,7 +185,7 @@ By default info outputs the public key, private WIF and label of the item reques
 
 
 ### Send
-Returns a receipt containing a transaction to send the given amount from the `from` key to the `to` address, and, optionally, to publish the transaction on the blockchain.
+Returns a receipt containing a transaction to send the given amount from the `from` key to the `to` address, and, optionally, to publish the transaction on the blockchain.  Change is returned to the `from` address.
 ```
   Usage: opensig send [options] <amount>
 
