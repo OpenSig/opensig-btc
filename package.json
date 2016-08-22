@@ -1,6 +1,6 @@
 {
   "name": "opensig",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "OpenSig command line client",
   "main": "src/index.js",
   "bin": {
