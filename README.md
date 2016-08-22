@@ -3,13 +3,15 @@
 [![NPM](https://img.shields.io/npm/v/bitcoinjs-lib.svg)](https://www.npmjs.org/package/bitcoinjs-lib)
 
 
-OpenSig Command Line Interface.  A javascript implementation of the OpenSig standard providing command line functions to digitally sign and verify files, recording signatures on the bitcoin blockchain. 
+OpenSig Command Line Interface.  A javascript implementation of the [OpenSig](http://www.opensig.net) standard providing command line functions to digitally sign and verify files, recording signatures on the bitcoin blockchain. 
+
+OpenSig is built using [opensig-lib](https://github.com/opensig/opensig-lib).
 
 ## Primary Features
 - **Create**: generate a new private key and optionally add it to your wallet.
 - **Sign**: sign any file with your private key and record your signature on the blockchain.
 - **Verify**: display a file's signatures from the blockchain.
-- **Info**: obtain private key, wif and public keys from any private key, WIF or file, or from a key in your wallet.
+- **Info**: obtain private key, WIF and public keys from any private key, WIF or file, or from a key in your wallet.
 
 ## Secondary Features
 - **Send**: create and publish a transaction to spend any amount from one address to another.
@@ -18,7 +20,59 @@ OpenSig Command Line Interface.  A javascript implementation of the OpenSig stan
 
 ## Installation
 
-`npm install opensig -g`
+The steps to install are:
+  - Install Node.js
+  - Use the Node.js Package Manager to install the opensig command line client and all its dependencies
+
+### Install Node.js
+Download the recommended version from [nodejs.org](https://nodejs.org/en/) and install it with the default installation options.
+
+### Install OpenSig
+Open a command prompt then type:
+```
+npm install opensig -g
+```
+This will install the OpenSig command line client and all its dependencies.
+
+## Using OpenSig for the First Time
+From the command prompt create a new wallet in the default location (~/.opensig/wallet)...
+```
+opensig create wallet
+```
+
+Create a new key and save it to the wallet with your name or whatever label you want (the -s option saves the new key to your wallet with the given label)...
+```
+opensig create -s "My Name"
+```
+
+List your new OpenSig address...
+```
+opensig info -o
+```
+To sign files you will need to transfer some bitcoin funds to your public key.
+
+However you don't need any funds to verify files so try...
+```
+opensig verify some_file
+```
+You should get no output meaning there are no signatures.
+
+Try downloading the [OpenSig white paper](http://www.opensig.net/opensig-whitepaper.pdf) and verifying that..
+```
+opensig verify opensig-whitepaper.pdf
+```
+You should see my public blockchain address (121GfwxgvdEUck7Xb4d5wbMnf7Xm2b4zw3) and the date I signed the file.
+ 
+When you have some funds you can try signing files...
+```
+opensig sign some_file
+```
+You should see a 'receipt' giving you detailed information about the blockchain transaction that OpenSig has generated.  Note, since you didn't specify the -p option the transaction hasn't been published on the blockchain and the response field in the receipt states 'Not Published'.  This means you haven't actually signed the file or spent any funds - it was just a dry run.  Run the same command with the -p option added and you should see 'Transaction Submitted' in the response field.
+ 
+You can get the balance of your OpenSig address by typing...
+```
+opensig balance
+```
 
 ## Usage
 
@@ -106,18 +160,18 @@ Returns a list of signatures for the given file.
 ### Info
 Outputs information about the given WIF, private key, wallet label or wallet.
 ```
-  Usage: 1. opensig info [options]
-         2. opensig info [options] <item>
+  Usage: 1. opensig info [options] [item]
+         2. opensig info [options] wallet
 
-  1. outputs information for all keys in the wallet.
-  2. outputs information about the given label, WIF, private key or file.
+  1. outputs information about the given label, WIF, private key or file.
+  2. outputs information for all keys in the wallet.
 
   Options:
 
     -h, --help  output usage information
     --full  outputs full information.  Equivalent to --format "<full>"
 ```
-`item`  The item to display information about.  With no arguments info outputs all keys in the wallet.
+`item`  The item to display information about.  With no arguments info outputs the default key (first key in the wallet).
 
 By default info outputs the public key, private WIF and label of the item requested.  Use the -f <format> option to control the output format, where <format> is a string containing free text and any of the following fields:
 `label`  the key's label
@@ -126,12 +180,12 @@ By default info outputs the public key, private WIF and label of the item reques
 `wif`    the Wallet Import Format version of the private key
 `pubc`   public key (compressed form)
 `pubu`   public key (uncompressed form)
-`wifc`   wif (compressed form)
-`wifu`   wif (uncompressed form)
+`wifc`   WIF (compressed form)
+`wifu`   WIF (uncompressed form)
 
 
 ### Send
-Returns a receipt containing a transaction to send the given amount from the `from` key to the `to` address, and, optionally, to publish the transaction on the blockchain.
+Returns a receipt containing a transaction to send the given amount from the `from` key to the `to` address, and, optionally, to publish the transaction on the blockchain.  Change is returned to the `from` address.
 ```
   Usage: opensig send [options] <amount>
 
@@ -141,13 +195,13 @@ Returns a receipt containing a transaction to send the given amount from the `fr
 
     -h, --help     output usage information
     -p --publish   publishes the signature on the blockchain
-    --to <to>      send to this label, public address, private key, wif or file
-    --from <from>  send from this label, private key, wif or file
+    --to <to>      send to this label, public address, private key, WIF or file
+    --from <from>  send from this label, private key, WIF or file
     --fee <fee>    use the given miner's fee
 ```
-`from`  Wallet key label, private key or wif of the address to spend from.  _(string containing a label, hex64 private key or WIF.  Also accepts a file)_.
+`from`  Wallet key label, private key or WIF of the address to spend from.  _(string containing a label, hex64 private key or WIF.  Also accepts a file)_.
 
-`to`   Wallet key label, public key, private key or wif of the address to send to.  _(string containing a label, public key, hex64 private key or WIF.  Also accepts a file)_ 
+`to`   Wallet key label, public key, private key or WIF of the address to send to.  _(string containing a label, public key, hex64 private key or WIF.  Also accepts a file)_ 
 
 `amount`   Amount to spend in the transaction or "all" to empty the address.  Defaults to 5430 satoshis. _(positive integer)_
 
@@ -176,7 +230,7 @@ Create a new wallet in the default location (~/.opensig/wallet)...
 > opensig create wallet
 ```
 
-Create a new key and save it to the wallet...
+Create a new key and save it to the wallet with the label "Me"...
 ```
 > opensig create -s Me
 ```
@@ -200,7 +254,7 @@ Receipt {
   input: 2100000000000000,
   payment: 100000,
   fee: 10000,
-  change: 209999999890000,
+  change: 2099999999890000,
   response: 'Transaction Submitted',
   txnID: '4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b',
   txnHex: '04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73' }
@@ -218,6 +272,9 @@ Get information about your new key in various formats...
 1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R	L2rvsCCDXhMkqQhZ2TRuyzjFw5FpkTM5hfczqEuYayidK2uKUnXL	Me
 
 > opensig info Me
+1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R	L2rvsCCDXhMkqQhZ2TRuyzjFw5FpkTM5hfczqEuYayidK2uKUnXL	Me
+
+> opensig info wallet
 1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R	L2rvsCCDXhMkqQhZ2TRuyzjFw5FpkTM5hfczqEuYayidK2uKUnXL	Me
 
 > opensig info --format "<full>"
@@ -281,7 +338,7 @@ Thu, 14 Apr 2016 00:43:39 GMT	1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R	Me
 
 Get information about a file's blockchain key, check its balance and send all its funds to your address...
 ```
-> opensig info my\_file.doc --full
+> opensig info my_file.doc --full
 
 label                   : my_file.doc
 private key             : 773a388fbbecea7f05053b0c55dd6b5cb76e7a330e75abda01fdcf6227b6060b
@@ -290,16 +347,17 @@ wif uncompressed        : 5Jio5wovmhSoJcAeS9bHsxSLdGsNTDfJLo5eNKGTiYgKEbMP4f3
 public key compressed   : 16uozUn4X1yppn1nS1iQXT5u6BsqheGpUq
 public key uncompressed : 15DVgHc5YXLsxQMU1qrcFbhoyKdqymUvgx
 
-> opensig balance my\_file.doc
+> opensig balance my_file.doc
 5430
 
-> opensig send all --from my\_file.doc --to me --publish
+> opensig send all --from my_file.doc --to me --publish
 insufficient funds
 ```
 
 ### Run the tests
 
     $ npm test
+    $ npm run test-cov
 
 
 ## Copyright
