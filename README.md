@@ -14,7 +14,7 @@ OpenSig is built using [opensig-lib](https://github.com/opensig/opensig-lib).
 - **Info**: obtain private key, WIF and public keys from any private key, WIF or file, or from a key in your wallet.
 
 ## Secondary Features
-- **Send**: create and publish a transaction to spend any amount from one address to another.
+- **Send**: create and publish a transaction to spend any amount (or amounts) from one address to another.
 - **Balance**: retrieve the balance of your key (or any public key) from the blockchain.
 
 
@@ -185,9 +185,9 @@ By default info outputs the public key, private WIF and label of the item reques
 
 
 ### Send
-Returns a receipt containing a transaction to send the given amount from the `from` key to the `to` address, and, optionally, to publish the transaction on the blockchain.  Change is returned to the `from` address.
+Returns a receipt containing a transaction to send the given amount or amounts from the `from` key to the `to` address, and, optionally, to publish the transaction on the blockchain.  Change is returned to the `from` address.
 ```
-  Usage: opensig send [options] <amount>
+  Usage: opensig send [options] <amount ...>
 
   creates a transaction
 
@@ -203,7 +203,7 @@ Returns a receipt containing a transaction to send the given amount from the `fr
 
 `to`   Wallet key label, public key, private key or WIF of the address to send to.  _(string containing a label, public key, hex64 private key or WIF.  Also accepts a file)_ 
 
-`amount`   Amount to spend in the transaction or "all" to empty the address.  Defaults to 5430 satoshis. _(positive integer)_
+`amount`   Amount to spend in the transaction or "all" to empty the address.  Defaults to 5430 satoshis.  If multiple amounts are given then separate transaction outputs will be created for each amount.  _(positive integer)_
 
 `fee`   Amount to include as the miner's fee in addition to the amount.  Defaults to 10000 satoshis. _(positive integer)_
 
@@ -280,6 +280,7 @@ Get information about your new key in various formats...
 > opensig info --format "<full>"
 
 label                   : Me
+identity                : OPENSIG-1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R-btc
 private key             : a8556b1ca569679a17274299e02b4558eca4ac4f9252e7fb9221d4b99244a2b4
 wif compressed          : L2rvsCCDXhMkqQhZ2TRuyzjFw5FpkTM5hfczqEuYayidK2uKUnXL
 wif uncompressed        : 5K6RSRHb73oPctb7MGWD1E5bCLzjY9EcW9kVxnkAskD9gXgzo8P
@@ -295,6 +296,7 @@ public key uncompressed : 1KxRFn875MpKYKEUEFDdZXTVxSpcjqhsNf
 > opensig info --full
 
 label                   : Me
+identity                : OPENSIG-1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R-btc
 private key             : a8556b1ca569679a17274299e02b4558eca4ac4f9252e7fb9221d4b99244a2b4
 wif compressed          : L2rvsCCDXhMkqQhZ2TRuyzjFw5FpkTM5hfczqEuYayidK2uKUnXL
 wif uncompressed        : 5K6RSRHb73oPctb7MGWD1E5bCLzjY9EcW9kVxnkAskD9gXgzo8P
@@ -341,6 +343,7 @@ Get information about a file's blockchain key, check its balance and send all it
 > opensig info my_file.doc --full
 
 label                   : my_file.doc
+identity                : OPENSIG-16uozUn4X1yppn1nS1iQXT5u6BsqheGpUq-btc
 private key             : 773a388fbbecea7f05053b0c55dd6b5cb76e7a330e75abda01fdcf6227b6060b
 wif compressed          : L1DUQpv8LHWsNiDaDzvMVugqd73Kgit3YNPVw5dEvNpXUcnAmRTT
 wif uncompressed        : 5Jio5wovmhSoJcAeS9bHsxSLdGsNTDfJLo5eNKGTiYgKEbMP4f3
