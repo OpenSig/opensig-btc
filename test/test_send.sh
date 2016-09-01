@@ -108,6 +108,20 @@ wait $! 2>/dev/null
 assertFile "send 1000 from label to label and output to console" test_files/send/send-1000-from-work-to-personal.out
 rm -f testURLResponse*
 
+# send [1000, 2000] locally to hello_world public address
+echo '{ "expectedURL":"https://blockchain.info/unspent?active=1M9jofAErijG4eiPUy19Qxot1KkPRRzyet", "testType":"response", "file":"test_files/blockchain.info/utxo_response-single_output.json" }' > testURLResponse1
+runTest node $baseDir/src/index.js send 1000 2000 --to 13hCoaeW632HQHpzvMmiyNbVWk8Bfpvz14 -w test_files/wallet/alt-wallet-1 --test-blockchain-api
+wait $! 2>/dev/null
+assertFile "send two amounts to public address and output to console" test_files/send/send-two_amounts-to-hello_world-with_fee-10000.out
+rm -f testURLResponse*
+
+# send ten amounts locally to hello_world public address
+echo '{ "expectedURL":"https://blockchain.info/unspent?active=1M9jofAErijG4eiPUy19Qxot1KkPRRzyet", "testType":"response", "file":"test_files/blockchain.info/utxo_response-single_output.json" }' > testURLResponse1
+runTest node $baseDir/src/index.js send 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 --to 13hCoaeW632HQHpzvMmiyNbVWk8Bfpvz14 -w test_files/wallet/alt-wallet-1 --test-blockchain-api
+wait $! 2>/dev/null
+assertFile "send ten amounts to public address and output to console" test_files/send/send-ten_amounts-to-hello_world-with_fee-10000.out
+rm -f testURLResponse*
+
 fi;
 
 

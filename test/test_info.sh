@@ -113,11 +113,11 @@ assert "get uncompressed public key for bitcoin.pdf" "1KuL3LiJuSzK7PCcQwpL8fBZVE
 runTest node $baseDir/src/index.js info Work -w test_files/wallet/alt-wallet-1 --full
 assertFile "--full displays full info" test_files/wallet/info-work-full
 
-fi;
-
 # get opensig id
 runTest node $baseDir/src/index.js info --opensig -w test_files/wallet/alt-wallet-1
 assert "get the opensig id for the default key" "OPENSIG-1M9jofAErijG4eiPUy19Qxot1KkPRRzyet-btc"
+
+fi;
 
 
 # import WIF to wallet

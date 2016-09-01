@@ -1,6 +1,6 @@
 {
   "name": "opensig",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "description": "OpenSig command line client",
   "main": "src/index.js",
   "bin": {
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "commander": "^2.9.0",
-    "opensig-lib": "^1.0.0-alpha.4"
+    "opensig-lib": "^1.0.0-alpha.6"
   },
   "devDependencies": {},
   "scripts": {

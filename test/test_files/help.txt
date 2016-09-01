@@ -8,7 +8,7 @@
     create [options] [wallet]    creates a new private key and outputs its details or creates a new wallet
     verify <file>                queries the blockchain and outputs the list of signees for the given file
     sign [options] <file> [key]  signs the given file using the given key and outputs the transaction
-    send [options] <amount>      creates a transaction
+    send [options] <amount...>   creates a transaction to send the given amount (or amounts) from --from to --to.  A separate transaction output is generated for each amount.
     balance [item]               displays the balance for the given public key, WIF, label or private key
 
   Options:

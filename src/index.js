@@ -171,8 +171,8 @@ program
 
 // SEND Command
 program
-	.command('send <amount>')
-	.description('creates a transaction')
+	.command('send <amount...>')
+	.description('creates a transaction to send the given amount (or amounts) from --from to --to.  A separate transaction output is generated for each amount.')
 	.option('-p --publish', 'publishes the signature on the blockchain')
 	.option('--to <to>', 'send to this label, public address, private key, wif or file')
 	.option('--from <from>', 'send from this label, private key, wif or file')

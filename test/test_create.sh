@@ -37,8 +37,8 @@ then
 # create new key pair
 runTest node $baseDir/src/index.js create
 assertRE "A new private key, public key and WIF are created on demand" \
-"."\
 "label                   : undefined."\
+"identity                : OPENSIG-[A-Za-z0-9]{27,34}-btc."\
 "private key             : [0-9a-f]{1,64}."\
 "wif compressed          : [5KL][A-Za-z0-9]{51}."\
 "wif uncompressed        : [A-Za-z0-9]{51}."\
