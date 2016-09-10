@@ -122,6 +122,13 @@ wait $! 2>/dev/null
 assertFile "send ten amounts to public address and output to console" test_files/send/send-ten_amounts-to-hello_world-with_fee-10000.out
 rm -f testURLResponse*
 
+# send all locally to hello_world public address
+echo '{ "expectedURL":"https://blockchain.info/unspent?active=1M9jofAErijG4eiPUy19Qxot1KkPRRzyet", "testType":"response", "file":"test_files/blockchain.info/utxo_response-single_output.json" }' > testURLResponse1
+runTest node $baseDir/src/index.js send all --to 13hCoaeW632HQHpzvMmiyNbVWk8Bfpvz14 -w test_files/wallet/alt-wallet-1 --test-blockchain-api
+wait $! 2>/dev/null
+assertFile "send all to public address and output to console" test_files/send/send-all-to-hello_world-with_fee-10000.out
+rm -f testURLResponse*
+
 fi;
 
 

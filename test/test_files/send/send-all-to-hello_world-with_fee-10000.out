@@ -1,0 +1,14 @@
+Receipt {
+  from: 
+   { address: '1M9jofAErijG4eiPUy19Qxot1KkPRRzyet',
+     label: 'Personal' },
+  to: 
+   { address: '13hCoaeW632HQHpzvMmiyNbVWk8Bfpvz14',
+     label: undefined },
+  input: 74570,
+  payment: 64570,
+  fee: 10000,
+  change: 0,
+  response: 'Not Published',
+  txnID: '87e5c62e2f005b6fc7d5bbd00a5ad9bdb1dc9ea2d6a0b4d51a9502f575e47969',
+  txnHex: '010000000109882232243a0ff09bf0fe98f3be6130935642d11508c38d22724a81a24cd813010000006b483045022100ebf0c19249f70d6d2863cbf7eb9340c9151ac91dc173db31942be476c29f66e0022005b26957eddc4d63e0d779495ac290c4b60e27a170c1a4819e45d21dd55a5d49012103ef12ef92ab520c62061e07186faac5ef43e835a3ef63ddd1437d15e9fcb0dab300000000013afc0000000000001976a9141d8abe268642dda7228be625e425749f0fc5467988ac00000000' }

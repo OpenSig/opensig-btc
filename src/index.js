@@ -194,6 +194,7 @@ program
 			if( !from ) throw "wallet has no default key";
 			
 			// send
+			if( amount.length == 1 ) amount = amount[0];
 			opensig.send(from, to, amount, options.fee, publish ).then( end ).catch( fatalError );
 		}
 		catch(err){ fatalError(err); }
