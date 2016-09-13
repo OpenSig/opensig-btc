@@ -22,6 +22,7 @@ program
 	.version('1.0.0-alpha')
 	.usage('<command> [options] [args]   # Try opensig <command> --help')
 	.option('-a --address', 'limit output to compressed public blockchain address(es) only.  Overrides -f')
+	.option('-i --id', 'limit output to public id(s) only.  Overrides -f and -a')
 	.option('-f --format <format>', 'specify the output format (see documentation)')
 	.option('-w --wallet <file>', 'use the specified wallet file instead of the default wallet')
 	.option('-v --verbose', 'display verbose error information')
@@ -33,21 +34,21 @@ program
 	.command('info [item]')
 	.description('outputs information about the given WIF, private key or wallet.')
 	.option('--full', 'outputs full information.  Equivalent to --format "<full>"')
-	.option('-o --opensig', 'outputs in OpenSig text format.')
 	.action(function(item, options){
 		try{
 			// args and options
 			item = item || "default-key";
 			var publicAddressOnly = program.address || false;
+			var idOnly = program.id || false;
 			var fullOutput   = options.full || false;
 			var opensigOutput   = options.opensig || false;
-			var format = program.format || "";
+			var format = program.format || "<id>	<wif>	<label>";
 			var walletFile = program.wallet || defaultWalletFile;
 
 			// determine output format
 			format = fullOutput ? "<full>" : format;
 			format = publicAddressOnly ? "<pub>" : format;
-			format = opensigOutput ? "OPENSIG-<pub>-btc" : format;
+			format = idOnly ? "<id>" : format;
 
 			// command
 			var wallet = new Wallet( walletFile );
@@ -89,12 +90,14 @@ program
 			var privateKey = options.key;			
 			var saveLabel  = options.save;	
 			var publicAddressOnly = program.address || false;
+			var idOnly = program.id || false;
 			var walletFile = program.wallet || defaultWalletFile;
 			var createWallet = (wallet == "wallet");
 
 			// determine output format
 			var format = program.format || "<full>";
 			format = publicAddressOnly ? "<pub>" : format;
+			format = idOnly ? "<id>" : format;
 
 			// command
 			var wallet = new Wallet( walletFile, false, createWallet );
@@ -131,10 +134,12 @@ program
 		try{ 
 			// args and options
 			var publicAddressOnly = program.address || false;
+			var idOnly = program.id || false;
 
 			// determine output format
-			var format = program.format || "<longtime>	<pub>	<label>";
+			var format = program.format || "<longtime>	<id>	<label>";
 			format = publicAddressOnly ? "<pub>" : format;
+			format = idOnly ? "<id>" : format;
 
 			// command
 			opensig.blockchainAPI.setTestMode( program.testBlockchainApi );
