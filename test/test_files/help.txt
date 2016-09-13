@@ -16,6 +16,7 @@
     -h, --help             output usage information
     -V, --version          output the version number
     -a --address           limit output to compressed public blockchain address(es) only.  Overrides -f
+    -i --id                limit output to public id(s) only.  Overrides -f and -a
     -f --format <format>   specify the output format (see documentation)
     -w --wallet <file>     use the specified wallet file instead of the default wallet
     -v --verbose           display verbose error information

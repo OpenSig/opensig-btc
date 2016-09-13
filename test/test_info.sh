@@ -36,7 +36,7 @@ then
 
 # dump default wallet
 runTest node $baseDir/src/index.js info wallet
-assertRE "info wallet outputs the default wallet file contents as plain text" "^[A-Za-z0-9]{34}.[5KL][A-Za-z0-9]{51}.*"
+assertRE "info wallet outputs the default wallet file contents as plain text" "^OPENSIG-[A-Za-z0-9]{34}-btc.[5KL][A-Za-z0-9]{51}.*"
 
 # dump specified wallet
 runTest node $baseDir/src/index.js -w test_files/wallet/alt-wallet-1 info wallet
@@ -55,11 +55,11 @@ rm -f myWallet
 
 # get info from WIF
 runTest node $baseDir/src/index.js info L2MTsGktvDV6QdbFg2k3Ugjv2WiTdNLPPFY5Pm6Z2ALRF4eL9iGo
-assert "get full info from WIF that doesn't match wallet" "1AQxYUGz5sPwqtPpCbuBcS3PwKARKXQZdR	L2MTsGktvDV6QdbFg2k3Ugjv2WiTdNLPPFY5Pm6Z2ALRF4eL9iGo	undefined"
+assert "get full info from WIF that doesn't match wallet" "OPENSIG-1AQxYUGz5sPwqtPpCbuBcS3PwKARKXQZdR-btc	L2MTsGktvDV6QdbFg2k3Ugjv2WiTdNLPPFY5Pm6Z2ALRF4eL9iGo	undefined"
 
 # get info from WIF that matches wallet
 runTest node $baseDir/src/index.js info L3ZugXLgbaWpq1hgeRCWKBrAsNYK2Y7Pq64HciUP7K2nVJhGvr2u -w test_files/wallet/alt-wallet-1
-assert "get full info from WIF in wallet" "15J4SyQ9yCGetJ8uUyUoqjULASspzJMgAa	L3ZugXLgbaWpq1hgeRCWKBrAsNYK2Y7Pq64HciUP7K2nVJhGvr2u	Work"
+assert "get full info from WIF in wallet" "OPENSIG-15J4SyQ9yCGetJ8uUyUoqjULASspzJMgAa-btc	L3ZugXLgbaWpq1hgeRCWKBrAsNYK2Y7Pq64HciUP7K2nVJhGvr2u	Work"
 
 # get public address from WIF
 runTest node $baseDir/src/index.js info L2MTsGktvDV6QdbFg2k3Ugjv2WiTdNLPPFY5Pm6Z2ALRF4eL9iGo -a
@@ -67,7 +67,7 @@ assert "get public address from WIF" "1AQxYUGz5sPwqtPpCbuBcS3PwKARKXQZdR"
 
 # get info from label
 runTest node $baseDir/src/index.js info Work -w test_files/wallet/alt-wallet-1
-assert "get full info from label in wallet" "15J4SyQ9yCGetJ8uUyUoqjULASspzJMgAa	L3ZugXLgbaWpq1hgeRCWKBrAsNYK2Y7Pq64HciUP7K2nVJhGvr2u	Work"
+assert "get full info from label in wallet" "OPENSIG-15J4SyQ9yCGetJ8uUyUoqjULASspzJMgAa-btc	L3ZugXLgbaWpq1hgeRCWKBrAsNYK2Y7Pq64HciUP7K2nVJhGvr2u	Work"
 
 # get default public address from label
 runTest node $baseDir/src/index.js info Work -w test_files/wallet/alt-wallet-1 -a
@@ -75,7 +75,7 @@ assert "get default info from label in wallet" "15J4SyQ9yCGetJ8uUyUoqjULASspzJMg
 
 # get default info from label (case insensitive)
 runTest node $baseDir/src/index.js info peRsOnAl -w test_files/wallet/alt-wallet-1
-assert "get default info from case insensitive label in wallet" "1M9jofAErijG4eiPUy19Qxot1KkPRRzyet	L33c5Gv8Ggt99PFDPieZ5fk56u1dZVChjGsHbrRAz9yagytNs32a	Personal"
+assert "get default info from case insensitive label in wallet" "OPENSIG-1M9jofAErijG4eiPUy19Qxot1KkPRRzyet-btc	L33c5Gv8Ggt99PFDPieZ5fk56u1dZVChjGsHbrRAz9yagytNs32a	Personal"
 
 # get info with non-existent label
 runTest node $baseDir/src/index.js info wibble -w test_files/wallet/alt-wallet-1
@@ -83,11 +83,11 @@ assertError "error raised if try to get info from label that does not exist in t
 
 # get info no argument
 runTest node $baseDir/src/index.js info -w test_files/wallet/alt-wallet-1
-assert "get default address full info with no argument" "1M9jofAErijG4eiPUy19Qxot1KkPRRzyet	L33c5Gv8Ggt99PFDPieZ5fk56u1dZVChjGsHbrRAz9yagytNs32a	Personal"
+assert "get default address full info with no argument" "OPENSIG-1M9jofAErijG4eiPUy19Qxot1KkPRRzyet-btc	L33c5Gv8Ggt99PFDPieZ5fk56u1dZVChjGsHbrRAz9yagytNs32a	Personal"
 
 # get info default-key
 runTest node $baseDir/src/index.js info default-key -w test_files/wallet/alt-wallet-1
-assert "get default-key address full info" "1M9jofAErijG4eiPUy19Qxot1KkPRRzyet	L33c5Gv8Ggt99PFDPieZ5fk56u1dZVChjGsHbrRAz9yagytNs32a	Personal"
+assert "get default-key address full info" "OPENSIG-1M9jofAErijG4eiPUy19Qxot1KkPRRzyet-btc	L33c5Gv8Ggt99PFDPieZ5fk56u1dZVChjGsHbrRAz9yagytNs32a	Personal"
 
 # get public address no argument
 runTest node $baseDir/src/index.js info -w test_files/wallet/alt-wallet-1 -a
@@ -95,7 +95,7 @@ assert "get default public address with no argument" "1M9jofAErijG4eiPUy19Qxot1K
 
 # get info for file
 runTest node $baseDir/src/index.js info test_files/verify/bitcoin.pdf
-assert "get info for bitcoin.pdf" "16mCZiajppD94NWzZPHhiD21XBXRvdMqg1	L3AZRRSYbR3HD2c4iwctFwvdwzJ6DgZEaMZPjc6qW11rBCYAmEfL	test_files/verify/bitcoin.pdf";
+assert "get info for bitcoin.pdf" "OPENSIG-16mCZiajppD94NWzZPHhiD21XBXRvdMqg1-btc	L3AZRRSYbR3HD2c4iwctFwvdwzJ6DgZEaMZPjc6qW11rBCYAmEfL	test_files/verify/bitcoin.pdf";
 
 # get public key for file
 runTest node $baseDir/src/index.js info -a test_files/verify/bitcoin.pdf
@@ -114,7 +114,7 @@ runTest node $baseDir/src/index.js info Work -w test_files/wallet/alt-wallet-1 -
 assertFile "--full displays full info" test_files/wallet/info-work-full
 
 # get opensig id
-runTest node $baseDir/src/index.js info --opensig -w test_files/wallet/alt-wallet-1
+runTest node $baseDir/src/index.js info --id -w test_files/wallet/alt-wallet-1
 assert "get the opensig id for the default key" "OPENSIG-1M9jofAErijG4eiPUy19Qxot1KkPRRzyet-btc"
 
 fi;
