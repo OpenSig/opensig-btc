@@ -336,7 +336,7 @@ Receipt {
 Verify the document...
 ```
 > opensig verify my_file.doc
-Thu, 14 Apr 2016 00:43:39 GMT	1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R	Me
+Thu, 14 Apr 2016 00:43:39 GMT	OPENSIG-1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R-btc	Me
 ```
 
 Get information about a file's blockchain key, check its balance and send all its funds to your address...
