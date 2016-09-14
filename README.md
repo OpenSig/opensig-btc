@@ -47,7 +47,7 @@ opensig create -s "My Name"
 
 List your new OpenSig address...
 ```
-opensig info -o
+opensig info -i
 ```
 To sign files you will need to transfer some bitcoin funds to your public key.
 
@@ -61,7 +61,7 @@ Try downloading the [OpenSig white paper](http://www.opensig.net/opensig-whitepa
 ```
 opensig verify opensig-whitepaper.pdf
 ```
-You should see my public blockchain address (121GfwxgvdEUck7Xb4d5wbMnf7Xm2b4zw3) and the date I signed the file.
+You should see my public identity (OPENSIG-121GfwxgvdEUck7Xb4d5wbMnf7Xm2b4zw3-btc) and the date I signed the file.
  
 When you have some funds you can try signing files...
 ```
@@ -94,6 +94,7 @@ opensig balance
     -h, --help             output usage information
     -V, --version          output the version number
     -a --address           limit output to compressed public blockchain address(es) only.  Overrides -f
+    -i --id                limit output to public id(s) only.  Overrides -f and -a
     -f --format <format>   specify the output format (see documentation)
     -w --wallet <file>     use the specified wallet file instead of the default wallet
     -v --verbose           display verbose error information
@@ -237,7 +238,7 @@ Create a new key and save it to the wallet with the label "Me"...
 
 Get your public OpenSig address for sharing with others...
 ```
-> opensig info --opensig
+> opensig info --id
 OPENSIG-1McwqRhXr6ns7X6d3TxP3MQhVbndKg5W6R-btc
 ```
 
