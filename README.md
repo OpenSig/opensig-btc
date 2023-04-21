@@ -1,8 +1,10 @@
-# OpenSig CLI (opensig)
+# OpenSig For Bitcoin CLI (opensig)
 
 [![NPM](https://img.shields.io/npm/v/bitcoinjs-lib.svg)](https://www.npmjs.org/package/bitcoinjs-lib)
 
+**Depreciated**. This original version of OpenSig is no longer supported.  The [new standard](https://github.com/opensig/opensig) has moved to EVM-based blockchains to allow for more advanced features.
 
+2016 version of OpenSig to sign and verify documents on the Bitcoin blockchain.  
 OpenSig Command Line Interface.  A javascript implementation of the [OpenSig](http://www.opensig.net) standard providing command line functions to digitally sign and verify files, recording signatures on the bitcoin blockchain. 
 
 OpenSig is built using [opensig-lib](https://github.com/opensig/opensig-lib).
